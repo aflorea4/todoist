@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Task;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,5 +21,6 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password')
         ]);
         \App\Models\User::factory(2)->withPersonalTeam()->create();
+        Task::factory(30)->create();
     }
 }
