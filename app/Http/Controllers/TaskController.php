@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use ProtoneMedia\LaravelQueryBuilderInertiaJs\InertiaTable;
@@ -40,10 +41,26 @@ class TaskController extends Controller
     public function show(Request $request, Task $task)
     {
         //TODO add authorization check
-
+        $task->human_due_date = Carbon::parse($task->due_date)->diffForHumans();
+        $task->human_created_at = Carbon::parse($task->created_at)->diffForHumans();
+        $task->human_updated_at = Carbon::parse($task->updated_at)->diffForHumans();
         return Inertia::render('Tasks/Show', [
             'task' => $task
         ]);
+    }
+
+    public function completed(Request $request, Task $task)
+    {
+        $task->completed = 1;
+        $task->save();
+        return redirect()->back();
+    }
+
+    public function in_progress(Request $request, Task $task)
+    {
+        $task->completed = 0;
+        $task->save();
+        return redirect()->back();
     }
 
     public function create(Request $request)

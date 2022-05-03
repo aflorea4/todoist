@@ -28,10 +28,12 @@ Route::get('/', function () {
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
 Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
 Route::post('/tasks/create', [TaskController::class, 'store'])->name('tasks.store');
-Route::get('/tasks/{task:id}', [TaskController::class, 'show'])->name('tasks.show');
+Route::post('/tasks/{task:id}/completed', [TaskController::class, 'completed'])->name('tasks.complete');
+Route::post('/tasks/{task:id}/in-progress', [TaskController::class, 'in_progress'])->name('tasks.in_progress');
 Route::get('/tasks/{task:id}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
 Route::post('/tasks/{task:id}/update', [TaskController::class, 'update'])->name('tasks.update');
 Route::post('/tasks/{task:id}/delete', [TaskController::class, 'destroy'])->name('tasks.destroy');
+Route::get('/tasks/{task:id}', [TaskController::class, 'show'])->name('tasks.show');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');

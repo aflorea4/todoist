@@ -78,27 +78,31 @@
                                                         <MenuItem
                                                             v-slot="{ active }"
                                                         >
-                                                            <Link
-                                                                to="route('tasks.show', task.id)"
+                                                            <button
+                                                                :class="[
+                                                                    active
+                                                                        ? 'bg-violet-500 text-white'
+                                                                        : 'text-gray-900',
+                                                                    'group flex rounded-md items-center w-full px-2 py-2 text-sm',
+                                                                ]"
+                                                                @click.stop="
+                                                                    $inertia.visit(
+                                                                        route(
+                                                                            'tasks.show',
+                                                                            task.id
+                                                                        )
+                                                                    )
+                                                                "
                                                             >
-                                                                <button
-                                                                    :class="[
+                                                                <EyeIcon
+                                                                    :active="
                                                                         active
-                                                                            ? 'bg-violet-500 text-white'
-                                                                            : 'text-gray-900',
-                                                                        'group flex rounded-md items-center w-full px-2 py-2 text-sm',
-                                                                    ]"
-                                                                >
-                                                                    <EyeIcon
-                                                                        :active="
-                                                                            active
-                                                                        "
-                                                                        class="w-5 h-5 mr-2 text-violet-400"
-                                                                        aria-hidden="true"
-                                                                    />
-                                                                    View
-                                                                </button>
-                                                            </Link>
+                                                                    "
+                                                                    class="w-5 h-5 mr-2 text-violet-400"
+                                                                    aria-hidden="true"
+                                                                />
+                                                                View
+                                                            </button>
                                                         </MenuItem>
                                                         <MenuItem
                                                             v-slot="{ active }"

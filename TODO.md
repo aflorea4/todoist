@@ -1,3 +1,4 @@
-1. De adaugat view pentru "view task" si "edit task"
-2. Link oentru "edit task"
-3. Form pentru delete
+1. De adaugat quick actions pentru view task + delete
+2. De adaugat view "edit task"
+3. Link pentru "edit task"
+4. Form pentru delete
