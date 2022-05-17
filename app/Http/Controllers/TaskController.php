@@ -104,13 +104,18 @@ class TaskController extends Controller
         //TODO add authorization check
 
         $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'due_date' => 'required|date',
             'completed' => 'boolean',
         ]);
 
-        $task->update($request->validated());
+        $task->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'due_date' => $request->due_date,
+            'completed' => $request->completed,
+        ]);
 
         return redirect()->route('tasks.show', $task->id);
     }

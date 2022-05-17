@@ -114,6 +114,11 @@
                                                                         : 'text-gray-900',
                                                                     'group flex rounded-md items-center w-full px-2 py-2 text-sm',
                                                                 ]"
+                                                                @click.stop="
+                                                                    editTask(
+                                                                        task.id
+                                                                    )
+                                                                "
                                                             >
                                                                 <PencilAltIcon
                                                                     :active="
@@ -137,6 +142,11 @@
                                                                         : 'text-gray-900',
                                                                     'group flex rounded-md items-center w-full px-2 py-2 text-sm',
                                                                 ]"
+                                                                @click.stop="
+                                                                    deleteTask(
+                                                                        task.id
+                                                                    )
+                                                                "
                                                             >
                                                                 <TrashIcon
                                                                     :active="
@@ -195,8 +205,16 @@ import TablePagination from "@/Pages/Tailwind2/Pagination.vue";
 
 import { Link } from "@inertiajs/inertia-vue3";
 
+import Swal from "sweetalert2/dist/sweetalert2.js";
+
 export default defineComponent({
     mixins: [InteractsWithQueryBuilder],
+
+    data() {
+        return {
+            form: this.$inertia.form({}),
+        };
+    },
 
     components: {
         AppLayout,
@@ -212,11 +230,38 @@ export default defineComponent({
         TrashIcon,
         TablePagination,
         Link,
+        Swal,
     },
 
     props: {
         tasks: Object,
         queryBuilderProps: Object,
+    },
+
+    methods: {
+        editTask(id) {
+            this.$inertia.visit(route("tasks.edit", id));
+        },
+        deleteTask(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.form.post(route("tasks.destroy", id));
+                    Swal.fire(
+                        "Deleted!",
+                        "Your file has been deleted.",
+                        "success"
+                    );
+                }
+            });
+        },
     },
 });
 </script>
